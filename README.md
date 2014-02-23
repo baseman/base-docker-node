@@ -3,21 +3,29 @@ I created this guide because I wanted to have a docker container on Ubuntu that 
 Initial problems I ran into before creating this guide:
 
  - The Docker documentation for this doesn't make much sense, is for a *very* old version of Docker, and uses CentOS.
- - The Docker daemon only works on linux and not OS X - I setup Vagrant for this
+ - The Docker daemon only works on linux and not OS X or windows - I setup Vagrant for this
 
 # Getting Started
-You will need [VirtualBox](https://www.virtualbox.org/) and [Vagrant](http://www.vagrantup.com/) installed. This guide will show you how to setup a Vagrant instance that uses VirtualBox and then loads Docker inside the Vagrant VM.
+You will need…
+- VirtualBox - https://www.virtualbox.org/
+- Vagrant - http://www.vagrantup.com/
+
+For Windows - you will also need
+- ssh client (eg. Putty - http://www.chiark.greenend.org.uk/~sgtatham/putty/)
 
 ## Initialize Vagrant
-Run this command from the project's root:
+1. Run this command from the project's root:
 
     vagrant up
 
-It will begin loading up the VM; during the initialization, it will ask you which network interface you wish to connect to; make sure to choose one that is exposed to the internet. For me this is typically the `Wi-Fi (AirPort)`.
+It will begin loading up the VM; during the initialization, it will ask you which network interface you wish to connect to; 
+make sure to choose one that is exposed to the internet (eg. Wifi, Ethernet).
 
-Once it is done, load the vagrant instance:
+2. Once it is done, ssh into the vagrant instance:
 
     vagrant ssh
+
+For Windows - If you are using windows and run this command you may run into an issue saying that an ssh client hasn’t been configured. If you’re using Putty you’ll need to use PuTTYgen.exe to convert the vagrant ssh key to .ppk file which you can then use in Putty to remote in.
 
 If you get an error about Guest Addition versions not matching, first try:
 
@@ -43,28 +51,23 @@ Save the file and then run:
 
     cd /vagrant
 
-    sudo docker build -t chrisabrams/ubuntu-node-hello .
+    sudo docker build -t <your-name>/node .
 
-This will create a docker container with `chrisabrams` as the username and `ubuntu-node-hello` as the container name. You can rename those to whatever you want. The `.` at the end means take all files in the directory and add them to the container to be built.
+The `.` at the end means take all files in the directory and add them to the container to be built.
 
 ## Running a docker container
 
-    sudo docker run -d -p 8080:8080 chrisabrams/ubuntu-node-hello
+    sudo docker run -d -i -t baseman/node /bin/bash
 
-`-d` will run the container as a daemon.
-`-p` will bind port 8080 in docker to port 8080 in the VM.
+You can retrieve the running container id by typing:
 
-You should now see `Hello World` when you run:
+    sudo docker ps
 
-    curl localhost:8080
+And then attach to the instance:
 
-## Viewing the docker instance from your OS
+    sudo docker attach <container id>
 
-    ifconfig
-
-Look for `eth1` and then the `inet addr:`. That should be the network IP address that was assigned to your VM. You can then access that from your browser:
-
-    http://IPADDRESS:8080
+You can detach and stop the container instance by typing ‘exit’
 
 ## Getting the container's logs
 
@@ -72,13 +75,15 @@ First, view the docker containers:
 
     sudo docker ps
 
-Find the `CONTAINER_ID` and then run:
+Find the `CONTAINER_ID` by typing the following command:
+
+        sudo docker ps
+
+And then run:
 
     sudo docker logs CONTAINER_ID_HERE
 
 ### Additional UFW ports
 If you need to open additional ports, add:
 
-    sudo ufw allow 4243/tcp
-
-which would open port `4243`.
+    sudo ufw allow <port number>/tcp
