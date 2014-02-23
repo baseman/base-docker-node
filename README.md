@@ -87,3 +87,15 @@ And then run:
 If you need to open additional ports, add:
 
     sudo ufw allow <port number>/tcp
+
+###
+Other Docker Commands
+
+- List all containers
+
+    sudo docker ps -a -q
+
+- Remove all containers
+
+   sudo docker rm [$(sudo docker ps -a -q)]
+
