@@ -3,7 +3,7 @@ I created this guide because I wanted to have a docker container on Ubuntu that 
 Initial problems I ran into before creating this guide:
 
  - The Docker documentation for this doesn't make much sense, is for a *very* old version of Docker, and uses CentOS.
- - The Docker daemon only works on linux and not OS X or windows - I setup Vagrant for this
+ - The Docker daemon only works on linux and not OS X or Windows - I setup Vagrant for this
 
 # Getting Started
 You will need…
