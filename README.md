@@ -88,8 +88,7 @@ If you need to open additional ports, add:
 
     sudo ufw allow <port number>/tcp
 
-###
-Other Docker Commands
+### Other Docker Commands
 
 - List all containers
 
