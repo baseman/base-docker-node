@@ -13,7 +13,7 @@ RUN apt-get install -y python-software-properties python build-essential curl
 # RUN curl http://nodejs.org/dist/node-latest.tar.gz | tar xz --strip-components=1
 # RUN ./configure --prefix=/opt/node && make && make install
 
-# Install pre-built Node 0.10.22
+# Install pre-built Node 0.10.23
 RUN mkdir /opt/node && cd /opt/node
 RUN curl http://nodejs.org/dist/v0.10.23/node-v0.10.23-linux-x64.tar.gz | tar xz --strip-components=1
 
