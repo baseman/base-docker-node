@@ -19,6 +19,3 @@ RUN curl http://nodejs.org/dist/v0.10.23/node-v0.10.23-linux-x64.tar.gz | tar xz
 
 RUN echo "export PATH=$PATH:/opt/node/bin" >> ~/.bashrc
 RUN . ~/.bashrc
-
-## Install project dependencies
-RUN cd /opt/src; npm install
